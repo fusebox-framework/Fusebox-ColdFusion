@@ -1,0 +1,42 @@
+<<cfoutput>><?xml version="1.0" encoding="UTF-8"?>
+<transfer>
+	<objectCache>
+		<defaultcache>
+			<scope type="instance"/>
+		</defaultcache>
+	</objectCache>
+	<objectDefinitions>
+		<<cfloop list="$$oMetaData.getLTables()$$" index="thisTable">><<cfset oMetaData.setSelectedTable(thisTable)>><<cfset aRelManyToOne = oMetaData.getRelationshipsFromXML(thisTable,'manyToOne')>><package name="$$oMetaData.getSelectedTableAlias()$$">
+			<!-- Name comes from alias, table comes from name -->
+			<object name="$$oMetaData.getSelectedTableAlias()$$" table="$$thisTable$$">
+				<<cfset aPKFields = oMetaData.getPKFieldsFromXML(thisTable)>><!-- Name comes from alias, column comes from name, type from type -->
+				<<cfif arrayLen(aPKFields) GT 1>>
+				<compositeid>
+					<<cfloop from="1" to="$$arrayLen(aPKFields)$$" index="i">><property name="$$aPKFields[i].alias$$" column="$$aPKFields[i].name$$" type="$$aPKFields[i].type$$"/>
+					<</cfloop>>
+				<compositeid>
+				<<cfelseif arrayLen(aPKFields) EQ 1>>
+				<id name="$$aPKFields[1].alias$$" column="$$aPKFields[1].name$$" type="$$aPKFields[1].type$$"/>
+				<</cfif>><<cfset aFields = oMetaData.getFieldsFromXML(thisTable)>>
+				<<cfloop from="1" to="$$arrayLen(aFields)$$" index="i">><<cfif NOT structKeyExists(aFields[i],"primaryKeySeq") OR aFields[i].primaryKeySeq EQ 0>><property name="$$aFields[i].alias$$" column="$$aFields[i].name$$" type="$$aFields[i].type$$" nullable="$$isNot(aFields[i].required)$$" /><</cfif>>
+				<</cfloop>>
+				<<cfloop from="1" to="$$arrayLen(aRelManyToOne)$$" index="thisRel">>
+				<manytoone name="$$aRelManyToOne[thisRel].alias$$">
+					<link to="$$aRelManyToOne[thisRel].alias$$.$$aRelManyToOne[thisRel].alias$$" column="$$aRelManyToOne[thisRel].links[1].from$$" />
+				</manytoone><</cfloop>>
+				<function name="configure" access="private" returntype="void">
+				 	<body>
+				 		<![CDATA[<<cfloop from="1" to="$$arrayLen(aFields)$$" index="i">><<cfif structKeyExists(aFields[i],"type") AND aFields[i].type IS "date" AND aFields[i].required IS false>><cfset set$$uFirst(aFields[i].alias)$$("1-January-0100")>
+						<<cfelseif structKeyExists(aFields[i],"type") AND aFields[i].type IS "boolean" AND aFields[i].alias IS "isActive">><cfset set$$uFirst(aFields[i].alias)$$("true")>
+						<<cfelseif structKeyExists(aFields[i],"type") AND aFields[i].type IS "boolean" AND structKeyExists(aFields[i],"default") AND aFields[i].default IS "1">><cfset set$$uFirst(aFields[i].alias)$$("true")>
+						<</cfif>><</cfloop>>
+						]]>
+				 	</body>
+				</function>
+			</object>
+	  	</package>
+		
+		<</cfloop>>
+	</objectDefinitions>
+</transfer><</cfoutput>>
+

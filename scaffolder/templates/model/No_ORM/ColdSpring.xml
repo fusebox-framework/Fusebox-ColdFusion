@@ -1,0 +1,78 @@
+<<cfoutput>>
+<?xml version="1.0" encoding="UTF-8"?>
+<<!---
+Copyright 2007 Objective Internet Ltd - http://www.objectiveinternet.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--->>
+<beans>
+<<cfloop list="$$oMetaData.getLTables()$$" index="thisTable">>
+	<<cfset oMetaData.setSelectedTable(thisTable)>>
+	<<cfset aRelManyToOne = oMetaData.getRelationshipsFromXML(thisTable,'manyToOne','true')>>
+	<<cfset aFields = oMetaData.getFieldsFromXML(thisTable)>>
+	<bean id="$$oMetaData.getSelectedTableAlias()$$Service" 
+			class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$Service">
+		<constructor-arg name="$$oMetaData.getSelectedTableAlias()$$DAO">
+			<ref bean="$$oMetaData.getSelectedTableAlias()$$DAO" />
+		</constructor-arg>
+		
+		<constructor-arg name="$$oMetaData.getSelectedTableAlias()$$Gateway">
+			<ref bean="$$oMetaData.getSelectedTableAlias()$$Gateway" />
+		</constructor-arg>
+		
+		<constructor-arg name="$$oMetaData.getSelectedTableAlias()$$Validator">
+			<ref bean="$$oMetaData.getSelectedTableAlias()$$Validator" />
+		</constructor-arg>
+		
+		<constructor-arg name="$$oMetaData.getSelectedTableAlias()$$Messages">
+			<ref bean="$$oMetaData.getSelectedTableAlias()$$Messages" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="$$oMetaData.getSelectedTableAlias()$$DAO" 
+			class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$DAO">
+		<constructor-arg name="dsn">
+			<value>$$oMetaData.getDataSource()$$</value>
+		</constructor-arg>
+	</bean>
+		
+	<bean id="$$oMetaData.getSelectedTableAlias()$$Gateway"
+		class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$Gateway">
+		<constructor-arg name="dsn">
+			<value>$$oMetaData.getDataSource()$$</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="$$oMetaData.getSelectedTableAlias()$$Validator"
+		class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$Validator">
+		<<cfloop from="1" to="$$arrayLen(aRelManyToOne)$$" index="i">>
+		<constructor-arg name="$$aRelManyToOne[i].Alias$$Service">
+			<ref bean="$$aRelManyToOne[i].Alias$$Service" />
+		</constructor-arg><</cfloop>>
+		
+	</bean>
+	
+	<bean id="$$oMetaData.getSelectedTableAlias()$$Messages"
+		class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$Messages">
+	</bean>
+	
+	<bean id="$$oMetaData.getSelectedTableAlias()$$Bean" singleton="false"
+		class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$Bean">
+	</bean>
+	
+	<bean id="$$oMetaData.getSelectedTableAlias()$$To" singleton="false"
+		class="$$oMetaData.getDottedPath(arguments.DestinationFilePath,oMetaData.getProject(),oMetaData.getSelectedTableAlias())$$To">
+	</bean>
+<</cfloop>>
+</beans>
+<</cfoutput>>
