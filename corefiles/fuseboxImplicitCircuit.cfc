@@ -54,13 +54,13 @@ limitations under the License.
 			<cfset variables.relativePath = variables.fuseboxApplication.relativePath(variables.appPath,variables.fullPath) />
 	
 			<!--- if the CFC actually exists, see if we can figure out if it exists in a sensible place --->
-			<cfif fileExists(variables.fullPath & getAlias() & ".cfc")>
-				<cfset variables.dottedPath = variables.fuseboxApplication.locateCfc(variables.fullPath & getAlias() & ".cfc") />
+			<cfif fileExists(variables.fullPath & Replace(getAlias(),".","/","ALL") & ".cfc")>
+				<cfset variables.dottedPath = variables.fuseboxApplication.locateCfc(variables.fullPath & Replace(getAlias(),".","/","ALL") & ".cfc") />
 				<cfif variables.dottedPath is not "">
 					<cfset found = true />
 					<cfset variables.fuseactionIsMethod = true />
 					<cfif variables.fuseboxApplication.debug>
-						<cfset arguments.myFusebox.trace("Compiler","Implicit component-as-circuit #variables.originalPath##getAlias()#.cfc identified") />
+						<cfset arguments.myFusebox.trace("Compiler","Implicit component-as-circuit #variables.originalPath##Replace(getAlias(),".","/","ALL")#.cfc identified") />
 					</cfif>
 					<cfbreak />
 				</cfif>
@@ -77,7 +77,7 @@ limitations under the License.
 
 			<cfloop index="path" list="controller/,model/,view/">
 	
-				<cfset variables.originalPath = path & getAlias() & "/" />
+				<cfset variables.originalPath = path & Replace(getAlias(),".","/","ALL") & "/" />
 				<cfset variables.fullPath = variables.appPath & variables.originalPath />
 				<cfset variables.relativePath = variables.fuseboxApplication.relativePath(variables.appPath,variables.fullPath) />
 	
@@ -101,7 +101,7 @@ limitations under the License.
 		<cfif not found>
 			<!--- no MVC, what about just a directory? --->
 			<cfset this.access = "public" />
-			<cfset variables.originalPath = getAlias() & "/" />
+			<cfset variables.originalPath = Replace(getAlias(),".","/","ALL") & "/" />
 			<cfset variables.fullPath = variables.appPath & variables.originalPath />
 			<cfset variables.relativePath = variables.fuseboxApplication.relativePath(variables.appPath,variables.fullPath) />
 
@@ -109,14 +109,14 @@ limitations under the License.
 
 				<!--- ok, the directory exists --->
 				<cfif variables.fuseboxApplication.debug>
-					<cfset arguments.myFusebox.trace("Compiler","Implicit circuit #getAlias()# identified") />
+					<cfset arguments.myFusebox.trace("Compiler","Implicit circuit #Replace(getAlias(),".","/","ALL")# identified") />
 				</cfif>
 
 			<cfelse>
 
 				<cfthrow type="fusebox.undefinedCircuit" 
 						message="undefined Circuit" 
-						detail="You specified a Circuit of #getAlias()# which is not defined." />
+						detail="You specified a Circuit of #Replace(getAlias(),".","/","ALL")# which is not defined." />
 
 			</cfif>
 
