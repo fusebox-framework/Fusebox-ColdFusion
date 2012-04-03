@@ -18,7 +18,7 @@
 		<cfset var extHolder = "" />
 		<cfset var loadCount = 0 />
 		<cfif NOT directoryExists(arguments.path)>
-			<cfthrow type="fusebox.BadDirectory" message="Directory does not exist." detail="Yourn path is probably wrong: #path#" />
+			<cfthrow type="fusebox.BadDirectory" message="Directory does not exist." detail="Your path is probably wrong: #path#" />
 		</cfif>
 		<cfdirectory action="list" directory="#arguments.path#" filter="*.cfc" name="fbExtensions" />
 		<cfloop query="fbExtensions">
