@@ -17,6 +17,7 @@
 		<cfset var fbExtensions = "" />
 		<cfset var extHolder = "" />
 		<cfset var loadCount = 0 />
+		<cfset var theMetaData = "" />
 		<cfif NOT directoryExists(arguments.path)>
 			<cfthrow type="fusebox.BadDirectory" message="Directory does not exist." detail="Your path is probably wrong: #path#" />
 		</cfif>
@@ -24,7 +25,8 @@
 		<cfloop query="fbExtensions">
 			<cfif fbExtensions.type EQ "file">				
 				<cfset extHolder = createObject("component", pathUtil.locateCfc("#fbExtensions.directory#/#fbExtensions.name#")).init(variables.fbXml) />
-				<cfif addExtension(extHolder, getMetaData(extHolder)["fusebox:lifecycle"])>
+				<cfset theMetaData = getMetaData(extHolder)>
+				<cfif addExtension(extHolder, theMetaData["fusebox:lifecycle"])>
 					<cfset loadCount = loadCount + 1 />
 				</cfif>
 			</cfif>
