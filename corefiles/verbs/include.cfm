@@ -136,7 +136,7 @@ limitations under the License.
 		if (fb_.verbInfo.attributes.contentvariable is not "" and not fb_.verbInfo.attributes.overwrite) {
 			fb_appendLine('<cfif not isDefined("#fb_.verbInfo.attributes.contentvariable#")>');
 		}
-		fb_appendLine("<cftry>");
+		//  fb_appendLine("<cftry>");
 		if (fb_.verbInfo.attributes.contentvariable is not "") {
 			if (fb_.verbInfo.attributes.append) {
 				fb_appendLine('<cfparam name="#fb_.verbInfo.attributes.contentvariable#" default=""><cfsavecontent variable="#fb_.verbInfo.attributes.contentvariable#"><cfoutput>###fb_.verbInfo.attributes.contentvariable###<cfinclude template="#fb_.verbInfo.action.getCircuit().getApplication().parseRootPath##fb_.targetCircuit.getRelativePath()##fb_.template#"></cfoutput></cfsavecontent>');
@@ -148,7 +148,7 @@ limitations under the License.
 		} else {
 			fb_appendLine('<cfoutput><cfinclude template="#fb_.verbInfo.action.getCircuit().getApplication().parseRootPath##fb_.targetCircuit.getRelativePath()##fb_.template#"></cfoutput>');
 		}
-		fb_appendLine('<cfcatch type="missingInclude"><cfif len(cfcatch.MissingFileName) gte #fb_.templateLen# and right(cfcatch.MissingFileName,#fb_.templateLen#) is "#fb_.template#">');
+		/* fb_appendLine('<cfcatch type="missingInclude"><cfif len(cfcatch.MissingFileName) gte #fb_.templateLen# and right(cfcatch.MissingFileName,#fb_.templateLen#) is "#fb_.template#">');
 		if (fb_.verbInfo.attributes.required) {
 			fb_appendLine('<cfthrow type="fusebox.missingFuse" message="missing Fuse" ' &
 					'detail="You tried to include a fuse #fb_.template# in circuit ' &
@@ -157,10 +157,11 @@ limitations under the License.
 			fb_appendLine('<!--- do nothing --->');
 		}
 		fb_appendLine('<cfelse><cfrethrow></cfif></cfcatch></cftry>');
+		
 		if (fb_.verbInfo.attributes.contentvariable is not "" and not fb_.verbInfo.attributes.overwrite) {
 			fb_appendLine('</cfif>');
 		}
-		
+		*/
 		// clean up any stack frame:
 		if (fb_.verbInfo.hasChildren) {
 			// unwind the stack:

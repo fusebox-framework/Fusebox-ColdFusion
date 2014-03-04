@@ -169,18 +169,31 @@ limitations under the License.
 		<cfargument name="text" type="any" required="false" 
 					hint="I am the string to be printed. I am required but it's faster to specify that I am not required." />
 		
+		<cfset var phaseContent		= "">
+		<cfset var hasPhaseContent	= false>
+		
 		<cfif variables.lastPhase is not variables.phase>
-			<cfset rawPrintln('<cfset myFusebox.thisPhase = "#variables.phase#">') />
+			<cfset phaseContent = phaseContent & CHR(13) & CHR(10) & 'myFusebox.thisPhase = "#variables.phase#";' />
+			<cfset hasPhaseContent = true>
 			<cfset variables.lastPhase = variables.phase />
 		</cfif>
 		<cfif variables.lastCircuit is not variables.circuit>
-			<cfset rawPrintln('<cfset myFusebox.thisCircuit = "#variables.circuit#">') />
+			<cfset phaseContent = phaseContent & CHR(13) & CHR(10) & 'myFusebox.thisCircuit = "#variables.circuit#";' />
+			<cfset hasPhaseContent = true>
 			<cfset variables.lastCircuit = variables.circuit />
 		</cfif>
 		<cfif variables.lastFuseaction is not variables.fuseaction>
-			<cfset rawPrintln('<cfset myFusebox.thisFuseaction = "#variables.fuseaction#">') />
+			<cfset phaseContent = phaseContent & CHR(13) & CHR(10) & 'myFusebox.thisFuseaction = "#variables.fuseaction#";' />
+			<cfset hasPhaseContent = true>
 			<cfset variables.lastFuseaction = variables.fuseaction />
 		</cfif>
+		
+		<cfif hasPhaseContent IS true>
+			<cfset rawPrintln("<cfscript>")>
+			<cfset rawPrintln(phaseContent)>
+			<cfset rawPrintln("</cfscript>")>
+		</cfif>
+		
 		<cfset variables.content.append(arguments.text) />
 		
 	</cffunction>
