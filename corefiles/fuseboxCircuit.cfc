@@ -26,6 +26,10 @@ limitations under the License.
 					hint="I am the path from the application root to the circuit directory." />
 		<cfargument name="parent" type="string" required="true" 
 					hint="I am the alias of the parent circuit." />
+		<cfargument name="virtual" type="boolean" required="true" 
+					hint="I specify if the circuit is virtual." />
+		<cfargument name="realCircuit" type="string" required="true" 
+					hint="I am the alias of the real circuit this circuit points to, if this circuit is virtual." />
 		<cfargument name="myFusebox" type="myFusebox" required="true" 
 					hint="I am the myFusebox data structure." />
 		<cfargument name="relative" type="boolean" required="true" 
@@ -41,6 +45,9 @@ limitations under the License.
 		
 		<cfset variables.originalPath = arguments.path />
 		<cfset this.parent = arguments.parent />
+		<cfset this.virtual = arguments.virtual />
+		<cfset this.real = false />
+		<cfset this.realCircuit = arguments.realCircuit />
 		<cfset variables.appPath = variables.fuseboxApplication.getApplicationRoot() />
 		<cfset variables.lexicons = structNew() />
 		

@@ -75,7 +75,14 @@ limitations under the License.
 			if (fb_.verbInfo.attributes.overwrite) {
 				fb_appendLine("<cfset #name# = #value# />");		
 			} else {
-				fb_appendLine("<cfif not isDefined(""#name#"")><cfset #name# = #value# /></cfif>");
+				if(not find(".",name))
+				{
+					fb_appendLine("<cfif not structKeyExists(variables,""#name#"")><cfset variables.#name# = #value# /></cfif>");
+				}
+				else
+				{
+					fb_appendLine("<cfif not isDefined(""#name#"")><cfset #name# = #value# /></cfif>");
+				}
 			}
 		} else {
 			fb_appendLine("<cfset #value# />");
