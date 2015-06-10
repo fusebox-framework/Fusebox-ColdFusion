@@ -10,7 +10,7 @@
 		<cfargument name="callerPath" type="string" required="true" 
 						hint="I am FUSEBOX_CALLER_PATH." />
 	
-		<cfset variables.approotdirectory = getCanonicalPath(normalizePartialPath(arguments.callerPath) & normalizePartialPath(arguments.appPath)) />
+		<cfset variables.approotdirectory = this.getCanonicalPath(normalizePartialPath(arguments.callerPath) & normalizePartialPath(arguments.appPath)) />
 		<cfset calculatePaths(variables.approotdirectory) />
 		<cfreturn this />
 	</cffunction>
@@ -134,8 +134,8 @@
 					hint="I deduce the dot-separated path to a CFC given its file system path (and a few heuristics).">
 			<cfargument name="filename" type="string" required="true" />
 		
-			<cfset var cfcPath = getCanonicalPath(filename) />
-			<cfset var webRoot = getCanonicalPath(expandPath("/")) />
+			<cfset var cfcPath = this.getCanonicalPath(filename) />
+			<cfset var webRoot = this.getCanonicalPath(expandPath("/")) />
 			<cfset var lenWebRoot = len(webRoot) />
 			<cfset var lenAppRoot = len(getApplicationRoot()) />
 			<cfset var lenCfcPath = len(cfcPath) />
