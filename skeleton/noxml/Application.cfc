@@ -13,7 +13,7 @@
 		// the rest is taken straight from the traditional fusebox.xml skeleton:
 		FUSEBOX_PARAMETERS.defaultFuseaction = "app.welcome";
 		// possible values: development-full-load, development-circuit-load or production:
-		FUSEBOX_PARAMETERS.mode = "development-full-load";
+		FUSEBOX_PARAMETERS.mode = "production";
 		FUSEBOX_PARAMETERS.conditionalParse = true;
 		// change this to something more secure:
 		FUSEBOX_PARAMETERS.password = "skeleton";

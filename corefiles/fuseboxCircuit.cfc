@@ -30,7 +30,7 @@ limitations under the License.
 					hint="I am the myFusebox data structure." />
 		<cfargument name="relative" type="boolean" required="true" 
 					hint="I indicate whether the path is relative or absolute (mapped)." />
-		<cfargument name="virtual" type="boolean" required="true" 
+		<cfargument name="virtual" type="boolean" required="false" default="false" 
 					hint="I specify if the circuit is virtual." />
 					
 		<cfset variables.fuseboxApplication = arguments.fbApp />
