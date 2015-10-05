@@ -32,7 +32,7 @@
 	<parameters>
 		<parameter name="defaultFuseaction" value="app.welcome" />
 		<!-- possible values: development-circuit-load, development-full-load or production: -->
-		<parameter name="mode" value="development-full-load" />
+		<parameter name="mode" value="production" />
 		<parameter name="conditionalParse" value="true" />
 		<!-- change this to something more secure: -->
 		<parameter name="password" value="skeleton" />

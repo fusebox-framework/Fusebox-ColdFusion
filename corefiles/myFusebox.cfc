@@ -15,7 +15,7 @@ limitations under the License.
 --->
 <cfcomponent hint="I provide the per-request myFusebox data structure and some convenience methods.">
 	<cfscript>
-	this.version.runtime     = "5.5.1";
+	this.version.runtime     = "5.6.2";
 	//this.version.runtime     = "5.5.0.#REReplace('$LastChangedRevision:683 $','[^0-9]','','all')#";
 	  
 	this.version.loader      = "unknown";
