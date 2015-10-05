@@ -30,11 +30,14 @@ limitations under the License.
 					hint="I am the myFusebox data structure." />
 		<cfargument name="relative" type="boolean" required="true" 
 					hint="I indicate whether the path is relative or absolute (mapped)." />
+		<cfargument name="virtual" type="boolean" required="true" 
+					hint="I specify if the circuit is virtual." />
 					
 		<cfset variables.fuseboxApplication = arguments.fbApp />
 		<cfset variables.alias = arguments.alias />
 		<cfset variables.relative = arguments.relative />
-
+		<cfset variables.virtual = arguments.virtual />
+		
 		<cfset variables.fuseboxLexicon = variables.fuseboxApplication.getFuseactionFactory().getBuiltinLexicon() />
 				
 		<cfset variables.customAttributes = structNew() />
@@ -400,9 +403,17 @@ limitations under the License.
 	
 	<cffunction name="getAlias" returntype="any" access="public" output="false" 
 				hint="I return the circuit alias.">
-	
+		<cfargument name="returnRealAlias" type="boolean" required="false" default="true" 
+						hint="I am a flag indicating whether or not to return the 'virtual' parent alias if this is a 'real' circuit.  Internal calls within this component should set me to false." />
+		
 		<cfreturn variables.alias />
-	
+		<cfset var a = variables.alias />
+		<cfif arguments.returnRealAlias and this.real>
+			<cfset a = this.parent />
+		</cfif>
+		
+		<cfreturn a />
+		
 	</cffunction>
 	
 	<cffunction name="getApplication" returntype="any" access="public" output="false" 
