@@ -35,12 +35,12 @@ limitations under the License.
 				<cfif not directoryExists(variables.parsedDir)>
 					<cftry>
 						<cfdirectory action="create" directory="#variables.parsedDir#" mode="777" />
-					<cfcatch type="any">
-						<cfthrow type="fusebox.missingParsedDirException"
-							message="The 'parsed' directory in the application root directory is missing, and could not be created"
-							detail="You must manually create this directory, and ensure that CF has the ability to write and change files within the directory."
-							extendedinfo="#cfcatch.detail#" />
-					</cfcatch>
+						<cfcatch type="any">
+							<cfthrow type="fusebox.missingParsedDirException"
+								message="The 'parsed' directory in the application root directory is missing, and could not be created"
+								detail="You must manually create this directory, and ensure that CF has the ability to write and change files within the directory."
+								extendedinfo="#cfcatch.detail#" />
+						</cfcatch>
 					</cftry>
 				</cfif>
 			</cflock>
@@ -53,9 +53,7 @@ limitations under the License.
 	</cffunction>
 	
 	<cffunction name="getMyFusebox" returntype="any" access="public" output="false">
-	
 		<cfreturn variables.myFusebox />
-		
 	</cffunction>
 
 	<cffunction name="reset" returntype="void" access="public" output="false" 
@@ -67,9 +65,9 @@ limitations under the License.
 		<!--- watch out for hosts that have createObject("java") disabled - this will be slow but it will work --->
 		<cftry>
 			<cfset variables.content = createObject("java","java.lang.StringBuffer").init() />
-		<cfcatch type="any">
-			<cfset variables.content = createObject("component","FakeStringBuffer").init() />
-		</cfcatch>
+			<cfcatch type="any">
+				<cfset variables.content = createObject("component","FakeStringBuffer").init() />
+			</cfcatch>
 		</cftry>
 
 	</cffunction>	
@@ -112,15 +110,17 @@ limitations under the License.
 		
 		<cfset rawPrintln('<cfsetting enablecfoutputonly="false" />') />
 		<cftry>
-			<cffile action="write" file="#variables.parsedDir#/#variables.filename#"
-					output="#parsedText#"
-					charset="#variables.fuseboxApplication.characterEncoding#" />
-		<cfcatch type="any">
-			<cfthrow type="fusebox.errorWritingParsedFile" 
-					message="An Error during write of Parsed File or Parsing Directory not found." 
-					detail="Attempting to write the parsed file '#variables.filename#' threw an error. This can also occur if the parsed file directory cannot be found."
-					extendedinfo="#cfcatch.detail#" />
-		</cfcatch>
+			<cflock name="#hash('#variables.parsedDir#/#variables.filename#')#" type="exclusive" timeout="30">
+				<cffile action="write" file="#variables.parsedDir#/#variables.filename#"
+						output="#parsedText#"
+						charset="#variables.fuseboxApplication.characterEncoding#" />
+			</cflock>
+			<cfcatch type="any">
+				<cfthrow type="fusebox.errorWritingParsedFile" 
+						message="An Error during write of Parsed File or Parsing Directory not found." 
+						detail="Attempting to write the parsed file '#variables.filename#' threw an error. This can also occur if the parsed file directory cannot be found."
+						extendedinfo="#cfcatch.detail#" />
+			</cfcatch>
 		</cftry>
 		
 	</cffunction>

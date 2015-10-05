@@ -67,7 +67,7 @@ limitations under the License.
 		<cfargument name="appParameters" type="struct" required="true" 
 					hint="I am FUSEBOX_PARAMETERS." />
 		
-		<cfset var myVersion = "5.5.1" />
+		<cfset var myVersion = "5.6.2" />
 		<!--- <cfset var myVersion = "5.5.0.#REReplace('$LastChangedRevision:683 $','[^0-9]','','all')#" /> --->
 
 		<cfset variables.factory = createObject("component","fuseboxFactory").init() />
