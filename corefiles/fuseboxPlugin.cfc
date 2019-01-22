@@ -110,7 +110,7 @@ limitations under the License.
 														this.path,arguments.fbApp.getApplicationRoot()) />
 			</cfif>
 			
-			<cfset this.rootpath = arguments.fbApp.getCanonicalPath(this.rootpath) />
+			<cfset this.rootpath = arguments.fbApp.getFBCanonicalPath(this.rootpath) />
 			
 			<cfset variables.parameters = arguments.pluginXML.xmlChildren />
 			<cfset variables.paramVerbs = structNew() />
