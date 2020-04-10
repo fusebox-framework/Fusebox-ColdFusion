@@ -10,7 +10,7 @@
 		<cfargument name="callerPath" type="string" required="true" 
 						hint="I am FUSEBOX_CALLER_PATH." />
 	
-		<cfset variables.approotdirectory = getCanonicalPath(normalizePartialPath(arguments.callerPath) & normalizePartialPath(arguments.appPath)) />
+		<cfset variables.approotdirectory = getFBCanonicalPath(normalizePartialPath(arguments.callerPath) & normalizePartialPath(arguments.appPath)) />
 		<cfset calculatePaths(variables.approotdirectory) />
 		<cfreturn this />
 	</cffunction>
@@ -60,7 +60,7 @@
 		
 	</cffunction>
 	
-	<cffunction name="getCanonicalPath" returntype="string" access="public" output="false" 
+	<cffunction name="getFBCanonicalPath" returntype="string" access="public" output="false" 
 				hint="I return a canonical file path (with all /../ sections resolved).">
 		<cfargument name="path" type="string" required="true" 
 					hint="I am the path to resolve." />
@@ -134,8 +134,8 @@
 					hint="I deduce the dot-separated path to a CFC given its file system path (and a few heuristics).">
 			<cfargument name="filename" type="string" required="true" />
 		
-			<cfset var cfcPath = getCanonicalPath(filename) />
-			<cfset var webRoot = getCanonicalPath(expandPath("/")) />
+			<cfset var cfcPath = getFBCanonicalPath(filename) />
+			<cfset var webRoot = getFBCanonicalPath(expandPath("/")) />
 			<cfset var lenWebRoot = len(webRoot) />
 			<cfset var lenAppRoot = len(getApplicationRoot()) />
 			<cfset var lenCfcPath = len(cfcPath) />

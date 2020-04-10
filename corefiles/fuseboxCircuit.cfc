@@ -70,7 +70,7 @@ limitations under the License.
 			</cfif>
 		</cfif>
 		
-		<cfset variables.fullPath = variables.fuseboxApplication.getCanonicalPath(variables.fullPath) />
+		<cfset variables.fullPath = variables.fuseboxApplication.getFBCanonicalPath(variables.fullPath) />
 
 		<!---
 			this was not correctly normalized prior to ticket 139 but it didn't really matter

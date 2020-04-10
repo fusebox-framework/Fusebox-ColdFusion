@@ -1291,12 +1291,12 @@ limitations under the License.
 		
 	</cffunction>
 	
-	<cffunction name="getCanonicalPath" returntype="string" access="public" output="false" 
+	<cffunction name="getFBCanonicalPath" returntype="string" access="public" output="false" 
 				hint="I return a canonical file path (with all /../ sections resolved).">
 		<cfargument name="path" type="string" required="true" 
 					hint="I am the path to resolve." />
 					
-		<cfreturn pathUtil.getCanonicalPath(arguments.path) />
+		<cfreturn pathUtil.getFBCanonicalPath(arguments.path) />
 		
 	</cffunction>
 	
