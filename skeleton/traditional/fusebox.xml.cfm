@@ -18,7 +18,7 @@
 	<circuits>
 		<!-- illustrates defaults for parent ("") and relative ("true") -->
 		<circuit alias="time" path="model/time/" parent="" />
-		<circuit alias="display" path="view/display/" parent="" />
+		<circuit alias="ah" path="adhocReports" parent="" />
 		<circuit alias="layout" path="view/layout/" parent="" />
 		<circuit alias="app" path="controller/" relative="true" />
 	</circuits>
